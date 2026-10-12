@@ -1,0 +1,760 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7138d4">
+  <title>SchoovaMate | School Task Tracker</title>
+  <link rel="stylesheet" href="SchoovaStyle.css">
+  <script src="SchoovaScript.js" defer=""></script>
+</head>
+
+<body>
+
+  <!-- =========================================
+       LOGIN AND REGISTRATION
+  ========================================== -->
+  <section id="authPage" class="auth-page">
+    <div class="auth-card">
+
+      <div class="brand">
+        <div class="logo-mark">S</div>
+        <div>
+          <h1>SchoovaMate</h1>
+          <p>Your school life, organized.</p>
+        </div>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="loginPanel">
+        <div class="auth-heading">
+          <span class="eyebrow">WELCOME TO SCHOOVAMATE</span>
+          <h2>Sign in to continue</h2>
+          <p>
+            Manage school tasks, communicate with classmates,
+            and stay updated with your classroom announcements.
+          </p>
+        </div>
+
+        <div class="role-selector">
+          <button type="button" id="studentRoleBtn" class="role-btn active">
+            🎓 Student
+          </button>
+
+          <button type="button" id="teacherRoleBtn" class="role-btn">
+            👩‍🏫 Teacher
+          </button>
+        </div>
+
+        <form id="loginForm">
+          <label for="loginIdentifier" id="identifierLabel">
+            Student LRN
+          </label>
+
+          <input id="loginIdentifier" type="text" placeholder="Enter your 12-digit LRN" autocomplete="username" maxlength="50" required="">
+
+          <label for="loginPassword">Password</label>
+
+          <div class="password-wrap">
+            <input id="loginPassword" type="password" placeholder="Enter your password" autocomplete="current-password" required="">
+
+            <button type="button" id="passwordToggle" class="password-toggle" aria-label="Show password">
+              👁
+            </button>
+          </div>
+
+          <label class="remember-option">
+            <input type="checkbox" id="rememberLogin">
+            <span>Remember my ID on this device</span>
+          </label>
+
+          <p id="loginError" class="error-message" role="alert"></p>
+
+          <button type="submit" id="loginSubmit" class="primary-btn">
+            Sign In
+          </button>
+        </form>
+
+        <div class="auth-links">
+          <button type="button" id="showTeacherRegister" class="text-btn">
+            Register as a Teacher
+          </button>
+
+          <button type="button" id="showStudentRegister" class="text-btn">
+            Register as a Student
+          </button>
+        </div>
+
+        <div class="demo-info">
+          <h3>How registration works</h3>
+          <p>1. Teachers create their accounts and classrooms.</p>
+          <p>2. Teachers provide their section name and room password.</p>
+          <p>3. Students register using the correct classroom details.</p>
+          <p class="security-note">
+            Use a properly configured backend to securely store accounts
+            and passwords.
+          </p>
+        </div>
+      </div>
+
+      <!-- TEACHER REGISTRATION -->
+      <div id="teacherRegisterPanel" class="hidden">
+        <div class="auth-heading">
+          <span class="eyebrow">SET UP YOUR CLASS</span>
+          <h2>Teacher registration</h2>
+          <p>Create your teacher account and classroom.</p>
+        </div>
+
+        <form id="teacherRegisterForm">
+
+          <label for="teacherName">Teacher full name</label>
+          <input id="teacherName" type="text" placeholder="Enter your full name" maxlength="80" autocomplete="name" required="">
+
+          <label for="teacherId">Teacher ID</label>
+          <input id="teacherId" type="text" placeholder="Create a teacher ID" minlength="4" maxlength="50" autocomplete="username" required="">
+
+          <label for="teacherPassword">Password</label>
+          <input id="teacherPassword" type="password" placeholder="At least 8 characters" minlength="8" autocomplete="new-password" required="">
+
+          <label for="teacherPasswordConfirm">Confirm password</label>
+          <input id="teacherPasswordConfirm" type="password" placeholder="Re-enter your password" minlength="8" autocomplete="new-password" required="">
+
+          <label for="teacherSectionName">Section name</label>
+          <select id="teacherSectionName" required="">
+            <option value="">Select your section</option>
+            <option value="ICT Honesty">ICT Honesty</option>
+            <option value="ICT Fidelity">ICT Fidelity</option>
+          </select>
+
+          <label for="teacherRoomPassword">Room join password</label>
+          <input id="teacherRoomPassword" type="password" placeholder="Create a room password" minlength="4" autocomplete="new-password" required="">
+
+          <label for="teacherRoomPasswordConfirm">
+            Confirm room password
+          </label>
+          <input id="teacherRoomPasswordConfirm" type="password" placeholder="Re-enter room password" minlength="4" autocomplete="new-password" required="">
+
+          <p id="teacherRegisterError" class="error-message" role="alert"></p>
+
+          <button type="submit" class="primary-btn full-width">
+            Create Teacher Account
+          </button>
+        </form>
+
+        <button type="button" id="backFromTeacherRegister" class="text-btn">
+          ← Back to sign in
+        </button>
+      </div>
+
+      <!-- STUDENT REGISTRATION -->
+      <div id="studentRegisterPanel" class="hidden">
+        <div class="auth-heading">
+          <span class="eyebrow">JOIN YOUR CLASS</span>
+          <h2>Student registration</h2>
+          <p id="studentRegistrationInfo">
+            Create your student account using your full name, LRN, and password.
+          </p>
+        </div>
+
+        <form id="studentRegisterForm">
+
+          <label for="studentName">Student full name</label>
+          <input id="studentName" type="text" placeholder="Enter your full name" maxlength="80" autocomplete="name" required="">
+
+          <label for="studentLrn">Student LRN</label>
+          <input id="studentLrn" type="text" inputmode="numeric" placeholder="Enter your 12-digit LRN" minlength="12" maxlength="12" pattern="[0-9]{12}" autocomplete="username" required="">
+
+          <label for="studentPassword">Create password</label>
+          <input id="studentPassword" type="password" placeholder="At least 8 characters" minlength="8" autocomplete="new-password" required="">
+
+          <label for="studentPasswordConfirm">Confirm password</label>
+          <input id="studentPasswordConfirm" type="password" placeholder="Re-enter your password" minlength="8" autocomplete="new-password" required="">
+
+          <p id="studentRegisterError" class="error-message" role="alert"></p>
+
+          <button type="submit" class="primary-btn full-width">
+            Create Student Account
+          </button>
+        </form>
+
+        <button type="button" id="backFromStudentRegister" class="text-btn">
+          ← Back to sign in
+        </button>
+      </div>
+
+      <p class="auth-footer">
+        SchoovaMate · School productivity prototype
+      </p>
+    </div>
+  </section>
+
+
+  <!-- =========================================
+       MAIN DASHBOARD
+  ========================================== -->
+  <section id="dashboardPage" class="dashboard hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="sidebar-brand">
+        <div class="logo-mark small-logo">S</div>
+        <div>
+          <strong>SchoovaMate</strong>
+          <small>Learning companion</small>
+        </div>
+      </div>
+
+      <div class="sidebar-user">
+        <img id="userAvatarImage" class="avatar hidden" alt="Profile picture">
+
+        <div class="avatar" id="userAvatar">S</div>
+
+        <div>
+          <strong id="sidebarUserName">User</strong>
+          <small id="sidebarUserRole">Student</small>
+        </div>
+      </div>
+
+      <p class="nav-label">MAIN MENU</p>
+
+      <nav class="navigation">
+
+        <button type="button" class="nav-btn active" data-view="overview">
+          ▦ Overview
+        </button>
+
+        <button type="button" class="nav-btn" data-view="tasks">
+          ✓ My Tasks
+          <span id="taskNavCount" class="nav-count">0</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-view="students">
+          👥 Students
+        </button>
+
+        <button type="button" class="nav-btn" data-view="announcements">
+          ▤ Announcements
+          <span id="announcementNavCount" class="nav-count">0</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-view="profile">
+          👤 My Profile
+        </button>
+
+      </nav>
+
+      <div class="sidebar-bottom">
+        <p>Stay organized. Keep learning.</p>
+
+        <button type="button" id="logoutBtn" class="logout-btn">
+          ↪ Log Out
+        </button>
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">SCHOOL WORKSPACE</span>
+          <h2 id="headerPageTitle">Overview</h2>
+        </div>
+
+        <div class="topbar-user">
+          <div>
+            <strong id="headerUserName">User</strong>
+            <small id="headerUserRole">Student account</small>
+          </div>
+
+          <img id="headerAvatarImage" class="avatar header-avatar hidden" alt="Profile picture">
+
+          <div class="avatar header-avatar" id="headerAvatar">S</div>
+        </div>
+      </header>
+
+
+      <!-- =====================================
+           OVERVIEW
+      ====================================== -->
+      <section id="overviewView" class="content-view">
+
+        <div class="welcome-banner">
+          <div>
+            <span class="eyebrow">YOUR PERSONAL WORKSPACE</span>
+            <h1 id="welcomeHeading">Welcome back!</h1>
+            <p>
+              Plan your work, track your progress, and stay on top of school.
+            </p>
+            <p id="currentDate" class="date-label"></p>
+          </div>
+
+          <div class="welcome-symbol">✦</div>
+        </div>
+
+        <!-- TEACHER CLASSROOM INFORMATION -->
+        <div id="teacherCapacityPanel" class="capacity-panel hidden">
+          <div>
+            <strong id="roomSectionHeading">Your classroom</strong>
+            <p id="studentCapacityText">0 student accounts registered</p>
+            <p id="roomSectionDescription">
+              Share your section name with your students.
+            </p>
+          </div>
+
+          <span id="capacityBadge" class="capacity-badge">Students</span>
+        </div>
+
+        <!-- CLASSROOM SETUP -->
+        <form id="roomSetupForm" class="form-card hidden">
+          <h2>Set up your classroom</h2>
+
+          <p class="room-setup-help">
+            Enter the section name and room password students
+            will use when registering.
+          </p>
+
+          <label for="roomSetupSection">Section name</label>
+          <select id="roomSetupSection" required="">
+            <option value="">Select section</option>
+            <option value="ICT Honesty">ICT Honesty</option>
+            <option value="ICT Fidelity">ICT Fidelity</option>
+          </select>
+
+          <label for="roomSetupPassword">Room join password</label>
+          <input id="roomSetupPassword" type="password" minlength="4" placeholder="Create a room password" required="">
+
+          <label for="roomSetupPasswordConfirm">Confirm room password</label>
+          <input id="roomSetupPasswordConfirm" type="password" minlength="4" placeholder="Re-enter room password" required="">
+
+          <p id="roomSetupError" class="error-message" role="alert"></p>
+
+          <button type="submit" class="primary-btn">
+            Save Room Settings
+          </button>
+        </form>
+
+        <!-- TEACHER PROGRESS -->
+        <div id="teacherProgressPanel" class="progress-panel hidden">
+          <div class="section-heading">
+            <div>
+              <h2>Student task progress</h2>
+              <p>Check your students' task completion.</p>
+            </div>
+          </div>
+
+          <div id="teacherProgressTable" class="progress-table-wrap">
+            <div class="empty-state">
+              <strong>No students have joined yet</strong>
+              <p>Students can register using your classroom details.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATISTICS -->
+        <div class="stats-grid">
+
+          <article class="stat-card">
+            <span class="stat-icon purple">▤</span>
+            <p id="totalTasksLabel">Total tasks</p>
+            <h2 id="totalTasks">0</h2>
+            <small>Tasks in your workspace</small>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-icon orange">◷</span>
+            <p>Pending tasks</p>
+            <h2 id="pendingTasks">0</h2>
+            <small>Still to complete</small>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-icon green">✓</span>
+            <p>Completed tasks</p>
+            <h2 id="completedTasks">0</h2>
+            <small>Work finished</small>
+          </article>
+
+        </div>
+
+        <!-- RECENT TASKS -->
+        <div class="section-heading">
+          <div>
+            <h2>Recent tasks</h2>
+            <p>Keep an eye on what's coming up.</p>
+          </div>
+
+          <button type="button" class="secondary-btn" data-go="tasks">
+            View all tasks →
+          </button>
+        </div>
+
+        <div id="recentTasks" class="task-list">
+          <div class="empty-state">
+            <strong>No tasks yet</strong>
+            <p>Teacher-assigned and personal tasks will appear here.</p>
+          </div>
+        </div>
+
+        <!-- RECENT ANNOUNCEMENTS -->
+        <div class="section-heading announcement-heading">
+          <div>
+            <h2>Latest announcements</h2>
+            <p>Important updates for your schoolwork.</p>
+          </div>
+
+          <button type="button" class="secondary-btn" data-go="announcements">
+            View all →
+          </button>
+        </div>
+
+        <div id="recentAnnouncements" class="announcement-list">
+          <div class="empty-state">
+            <strong>Nothing to show yet</strong>
+            <p>Check back for updates.</p>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- =====================================
+           TASKS
+      ====================================== -->
+      <section id="tasksView" class="content-view hidden">
+
+        <div class="section-heading page-heading">
+          <div>
+            <h1>My Tasks</h1>
+            <p id="tasksPageDescription">
+              View your schoolwork, deadlines, and task progress.
+            </p>
+          </div>
+
+          <button type="button" id="addTaskBtn" class="primary-btn">
+            + Add Task
+          </button>
+        </div>
+
+        <div class="filters">
+          <input type="search" id="taskSearch" placeholder="Search tasks or subjects...">
+
+          <select id="taskFilter">
+            <option value="all">All tasks</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
+
+          <select id="taskTypeFilter">
+            <option value="all">All task types</option>
+            <option value="Assignment">Assignments</option>
+            <option value="Project">Projects</option>
+            <option value="Quiz">Quizzes</option>
+            <option value="Activity">Activities</option>
+            <option value="Research">Research</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <!-- ADD OR EDIT TASK -->
+        <form id="taskForm" class="form-card hidden">
+
+          <h2 id="taskFormHeading">Create a new task</h2>
+
+          <label for="taskTitle">Task title</label>
+          <input id="taskTitle" type="text" placeholder="e.g. Research introduction" maxlength="120" required="">
+
+          <label for="taskType">Task type</label>
+          <select id="taskType" required="">
+            <option value="Assignment">Assignment</option>
+            <option value="Project">Project</option>
+            <option value="Quiz">Quiz</option>
+            <option value="Activity">Activity</option>
+            <option value="Research">Research</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <label for="taskSubject">Subject</label>
+          <input id="taskSubject" type="text" placeholder="e.g. Practical Research" maxlength="80" required="">
+
+          <label for="taskDescription">Task description and instructions</label>
+          <textarea id="taskDescription" rows="4" maxlength="3000" placeholder="Explain what students need to do..." required=""></textarea>
+
+          <label for="taskDueDate">Due date</label>
+          <input id="taskDueDate" type="date" required="">
+
+          <label for="taskPriority">Priority</label>
+          <select id="taskPriority">
+            <option value="Normal">Normal</option>
+            <option value="High">High</option>
+            <option value="Low">Low</option>
+          </select>
+
+          <!-- TEACHER-ONLY ASSIGNMENT OPTIONS -->
+          <div id="taskAssignmentGroup">
+
+            <label for="taskTargetSection">Send task to</label>
+            <select id="taskTargetSection" required="">
+              <option value="both">Both ICT Honesty and ICT Fidelity</option>
+              <option value="ICT Honesty">ICT Honesty only</option>
+              <option value="ICT Fidelity">ICT Fidelity only</option>
+            </select>
+
+            <p class="form-help">
+              Students in the selected section will receive this task.
+            </p>
+
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" id="taskSubmitBtn" class="primary-btn">
+              Send Task
+            </button>
+
+            <button type="button" id="cancelTaskBtn" class="secondary-btn">
+              Cancel
+            </button>
+          </div>
+
+        </form>
+
+        <!-- TASK CARDS ARE RENDERED HERE BY JAVASCRIPT.
+             Each task card should include a comments area. -->
+        <div id="allTasks" class="task-list">
+          <div class="empty-state">
+            <strong>No tasks found</strong>
+            <p>Teacher-assigned tasks will appear here.</p>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- =====================================
+           ANNOUNCEMENTS
+      ====================================== -->
+      <section id="announcementsView" class="content-view hidden">
+
+        <div class="section-heading page-heading">
+          <div>
+            <h1>Announcements</h1>
+            <p>Read and share important classroom updates.</p>
+          </div>
+
+          <button type="button" id="addAnnouncementBtn" class="primary-btn hidden">
+            + Post Announcement
+          </button>
+        </div>
+
+        <!-- CREATE ANNOUNCEMENT -->
+        <form id="announcementForm" class="form-card hidden">
+
+          <h2>New announcement</h2>
+
+          <label for="announcementTitle">Announcement title</label>
+          <input id="announcementTitle" type="text" placeholder="Enter a title" maxlength="150" required="">
+
+          <label for="announcementMessage">Message</label>
+          <textarea id="announcementMessage" rows="5" maxlength="5000" placeholder="Write your announcement..." required=""></textarea>
+
+          <!-- SECTION TARGETING -->
+          <div id="announcementTargetGroup">
+
+            <label for="announcementTargetSection">Send announcement to</label>
+            <select id="announcementTargetSection" required="">
+              <option value="both">Both ICT Honesty and ICT Fidelity</option>
+              <option value="ICT Honesty">ICT Honesty only</option>
+              <option value="ICT Fidelity">ICT Fidelity only</option>
+            </select>
+
+            <p class="form-help">
+              Only students belonging to the selected section should
+              see this announcement.
+            </p>
+
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn">
+              Publish Announcement
+            </button>
+
+            <button type="button" id="cancelAnnouncementBtn" class="secondary-btn">
+              Cancel
+            </button>
+          </div>
+
+        </form>
+
+        <!-- ANNOUNCEMENT CARDS AND COMMENTS -->
+        <div id="allAnnouncements" class="announcement-list">
+          <div class="empty-state">
+            <strong>No announcements yet</strong>
+            <p>School updates will appear here.</p>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- =====================================
+           STUDENTS
+      ====================================== -->
+      <section id="studentsView" class="content-view hidden">
+
+        <div class="section-heading page-heading">
+          <div>
+            <h1>Students</h1>
+            <p>View students and organize them by ICT section.</p>
+          </div>
+        </div>
+
+        <!-- SECTION TABS -->
+        <div class="student-section-tabs">
+
+          <button type="button" class="student-section-btn active" data-student-section="ICT Honesty" aria-pressed="true">
+            🎓 ICT Honesty
+          </button>
+
+          <button type="button" class="student-section-btn" data-student-section="ICT Fidelity" aria-pressed="false">
+            🎓 ICT Fidelity
+          </button>
+          
+        <!-- lol!-->
+        </div>
+
+        <div class="student-section-heading">
+          <div>
+            <h2 id="studentSectionHeading">ICT Honesty</h2>
+            <p id="studentSectionDescription">
+              Students assigned to this section.
+            </p>
+          </div>
+        </div>
+
+        <!-- ADD STUDENT -->
+        <form id="addStudentForm" class="form-card hidden">
+
+          <h3>Add Student</h3>
+
+          <label for="newStudentName">Student's full name</label>
+          <input id="newStudentName" type="text" placeholder="Enter student's full name" maxlength="80" required="">
+
+          <div class="form-actions">
+            <button type="submit" class="primary-btn">
+              + Add Student
+            </button>
+          </div>
+
+        </form>
+
+        <!-- STUDENT DIRECTORY -->
+        <div id="studentDirectoryList" class="student-directory-list">
+          <div class="empty-state">
+            <strong>No students to display</strong>
+            <p>Registered students will appear here.</p>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- =====================================
+           MY PROFILE
+      ====================================== -->
+      <section id="profileView" class="content-view hidden">
+
+        <div class="section-heading page-heading">
+          <div>
+            <h1>My Profile</h1>
+            <p>View and manage your personal information.</p>
+          </div>
+        </div>
+
+        <div class="profile-layout">
+
+          <!-- PROFILE SUMMARY -->
+          <article class="form-card profile-summary-card">
+
+            <div class="profile-avatar-container">
+              <img id="profileAvatarPreview" class="profile-avatar hidden" alt="Your profile picture">
+
+              <div id="profileAvatarPlaceholder" class="profile-avatar-placeholder">
+                👤
+              </div>
+            </div>
+
+            <h2 id="profileDisplayName">Your Name</h2>
+            <p id="profileDisplayRole">Student</p>
+
+            <span id="profileDisplaySection" class="capacity-badge">
+              Your Section
+            </span>
+
+            <p class="form-help">
+              Keep your profile information updated.
+            </p>
+
+          </article>
+
+          <!-- PROFILE EDIT FORM -->
+          <form id="profileForm" class="form-card">
+
+            <h2>Edit Profile Information</h2>
+
+            <label for="profileFullName">Full name</label>
+            <input id="profileFullName" type="text" maxlength="80" placeholder="Enter your full name" required="">
+
+            <label for="profileEmail">Email address (optional)</label>
+            <input id="profileEmail" type="email" maxlength="150" placeholder="Enter your email address">
+
+            <label for="profileContact">Contact number (optional)</label>
+            <input id="profileContact" type="tel" maxlength="20" placeholder="Enter your contact number">
+
+            <label for="profilePicture">Profile picture</label>
+            <input id="profilePicture" type="file" accept="image/jpeg,image/png,image/webp">
+
+            <p class="form-help">
+              Choose a JPG, PNG, or WebP image. Use a reasonably
+              small image file.
+            </p>
+
+            <div class="form-actions">
+
+              <button type="submit" class="primary-btn">
+                Save Profile
+              </button>
+
+              <button type="button" id="removeProfilePictureBtn" class="secondary-btn">
+                Remove Picture
+              </button>
+
+            </div>
+
+            <p id="profileError" class="error-message" role="alert"></p>
+            <p id="profileSuccess" class="success-message" role="status"></p>
+
+            <p class="form-help">
+              Your account role, student LRN, teacher ID, and classroom
+              assignment are managed separately from editable profile
+              information.
+            </p>
+
+          </form>
+
+        </div>
+
+      </section>
+
+    </main>
+  </section>
+
+
+  <!-- =========================================
+       NOTIFICATION TOAST
+  ========================================== -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+
+</body></html>
